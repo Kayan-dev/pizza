@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 const selectUser = (reduxState) => {
@@ -16,6 +16,7 @@ const selectPizzas = (reduxState) => {
 export default function PizzaList() {
   const user = useSelector(selectUser);
   const pizza = useSelector(selectPizzas);
+  const dispatch = useDispatch();
 
   //   const addPizza = useDispatch(new_Pizza);
 
@@ -31,11 +32,22 @@ export default function PizzaList() {
       <p>
         Welcome back, <strong>{user.name}</strong>! Your favorite pizzas:
         {sort_Pizzas.map((pizz, index) => {
+          const isFavorite = user.favorites.includes(pizz.id);
+
+          // pizz.id
+          // user.favorites
+          const toggle = () => {
+            dispatch({
+              type: "TOGGLE_FAVORITE_PIZZA",
+              payload: pizz.id,
+            });
+          };
           return (
-            <ul>
+            <ul key={pizz.id}>
               <li>
                 {" "}
                 <strong>{pizz.name}</strong>
+                <button onClick={toggle}>{isFavorite ? "♥" : "♡"}</button>
                 <br></br>
                 <strong>Description: </strong> {pizz.description}
                 <br></br>

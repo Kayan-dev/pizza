@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 export default function AddPizzaForm() {
+  const initialState = "";
   const [name, set_name] = useState("");
   const [description, set_description] = useState("");
   const dispatch = useDispatch();
@@ -15,12 +16,14 @@ export default function AddPizzaForm() {
     const action = {
       type: "ADD_PIZZA",
       payload: {
-        id: 7,
+        id: Math.random(),
         name: name,
         description: description,
       },
     };
     dispatch(action);
+    set_name(initialState);
+    set_description(initialState);
 
     // - clear the input fields
   };
